@@ -1,13 +1,15 @@
 package az.edu.itbrains.ecommerce.services.impls;
 
-import az.edu.itbrains.ecommerce.dtos.product.ProductDealDto;
-import az.edu.itbrains.ecommerce.dtos.product.ProductDetailDto;
-import az.edu.itbrains.ecommerce.dtos.product.ProductHomeDto;
-import az.edu.itbrains.ecommerce.dtos.product.ProductRelatedDto;
+import az.edu.itbrains.ecommerce.dtos.product.*;
 import az.edu.itbrains.ecommerce.models.Product;
+import az.edu.itbrains.ecommerce.payloads.PaginationPayload;
 import az.edu.itbrains.ecommerce.repositories.ProductRepository;
 import az.edu.itbrains.ecommerce.services.ProductService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,6 +56,16 @@ public class ProductServiceImpl implements ProductService {
         ProductDealDto result = modelMapper.map(product, ProductDealDto.class);
         float percent = result.getDiscountPrice() * 100 / result.getPrice();
         result.setDiscountPercent((float)Math.round(percent));
+        return result;
+    }
+
+    @Override
+    public PaginationPayload<ProductShopDto> getShopProducts(Integer currentPage) {
+
+        currentPage = currentPage == null ? 1 : currentPage > 0 ? currentPage : 1;
+        Pageable pageable = PageRequest.of(currentPage-1, 6, Sort.by("id").descending());
+        Page<Product> sortProducts = productRepository.findAll(pageable);
+        PaginationPayload result = new PaginationPayload<>(sortProducts.getTotalPages(),sortProducts.getContent());
         return result;
     }
 

@@ -20,13 +20,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Float price;
+    private Double price;
     @Column(length = 1000)
     private String description;
-    private Float quantity;
+    private Double quantity;
     private String photoUrl;
     private Date discountDate;
-    private Float discountPrice;
+    private Double discountPrice;
     private Boolean featured;
     @ManyToOne
     private Category category;

@@ -44,8 +44,8 @@
               </tr>
               </thead>
               <tbody>
-              <tr  th:each="basket : ${baskets}" class="table-body-row">
-                <td class="product-remove"><a href="#"><i class="far fa-window-close"></i></a></td>
+              <tr  th:each="basket : ${cart.baskets}" class="table-body-row">
+                <td class="product-remove"><a th:href="'/basket/remove/'+${basket.product.id}"><i class="far fa-window-close"></i></a></td>
                 <td class="product-image"><img th:src="${basket.product.photoUrl}" alt=""></td>
                 <td th:text="${basket.product.name}" class="product-name">Strawberry</td>
                 <td th:text="${basket.product.price} + ' ₼'" class="product-price">$85</td>
@@ -69,15 +69,15 @@
               <tbody>
               <tr class="total-data">
                 <td><strong>Subtotal: </strong></td>
-                <td th:text="${subtotal}">$500</td>
+                <td th:text="${cart.subtotal}">$500</td>
               </tr>
               <tr class="total-data">
                 <td><strong>Shipping: </strong></td>
-                <td>$45</td>
+                <td th:text="${cart.shipping}">$45</td>
               </tr>
               <tr class="total-data">
                 <td><strong>Total: </strong></td>
-                <td>$545</td>
+                <td th:text="${cart.total}">$545</td>
               </tr>
               </tbody>
             </table>
@@ -91,7 +91,8 @@
             <h3>Apply Coupon</h3>
             <div class="coupon-form-wrap">
               <form method="get">
-                <p><input th:value="${coupon}" name="coupon" type="text" placeholder="Coupon"></p>
+                <p><input onchange="changeClass(value)" th:value="${coupon}" id="coupon" name="coupon" type="text" placeholder="Coupon"></p>
+                <p th:if="${coupon} == ''" class="text text-danger m-0">Bele bir kode movcud deyil.</p>
                 <p><input type="submit" value="Apply"></p>
               </form>
             </div>
@@ -101,6 +102,19 @@
     </div>
   </div>
   <!-- end cart -->
+
+  <script>
+    let couponInput = document.getElementById("coupon")
+
+    function changeClass(){
+      console.log(couponInput.value.length)
+      if(couponInput.value.length == 0){
+        couponInput.className = 'border border-danger'
+      }else{
+        couponInput.className = ''
+      }
+    }
+  </script>
 </section>
 </body>
 </html>

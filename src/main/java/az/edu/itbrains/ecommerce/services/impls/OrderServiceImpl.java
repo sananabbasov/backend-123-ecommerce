@@ -1,5 +1,7 @@
 package az.edu.itbrains.ecommerce.services.impls;
 
+import az.edu.itbrains.ecommerce.dtos.order.OrderDashboardDto;
+import az.edu.itbrains.ecommerce.dtos.order.OrderDetailDto;
 import az.edu.itbrains.ecommerce.dtos.order.OrderPlaceDto;
 import az.edu.itbrains.ecommerce.models.Basket;
 import az.edu.itbrains.ecommerce.models.Order;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -54,5 +57,19 @@ public class OrderServiceImpl implements OrderService {
         }
         basketRepository.deleteAll(findBasket);
         return true;
+    }
+
+    @Override
+    public List<OrderDashboardDto> getDashboardOrder() {
+        List<Order> getOrders = orderRepository.findAll();
+        List<OrderDashboardDto> orderDashboardDto = getOrders.stream().map(order -> modelMapper.map(order, OrderDashboardDto.class)).collect(Collectors.toList());
+        return orderDashboardDto;
+    }
+
+    @Override
+    public List<OrderDetailDto> getOrderById(Long id) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(id);
+        List<OrderDetailDto> orderDetailDtos = orderItems.stream().map(item -> modelMapper.map(item, OrderDetailDto.class)).collect(Collectors.toList());
+        return orderDetailDtos;
     }
 }

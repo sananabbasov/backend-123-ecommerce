@@ -10,7 +10,7 @@ public class Basket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Float quantity;
+    private Double quantity;
     @ManyToOne
     private Product product;
     @ManyToOne

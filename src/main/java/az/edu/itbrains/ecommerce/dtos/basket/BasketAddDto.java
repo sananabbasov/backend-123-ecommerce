@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BasketAddDto {
-    private Float quantity;
+    private Double quantity;
     private Long productId;
 }

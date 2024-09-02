@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{/dashboard/layout}"
+        lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fruitkha - News</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+                <th scope="col">Message</th>
+                <th scope="col">Info</th>
+                <th scope="col">Order status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <th scope="row" th:text="${order.id}">1</th>
+                <td th:text="${order.user.name} + ' ' + ${order.user.surname}">Mark</td>
+                <td th:text="${order.phoneNumber}">Otto</td>
+                <td th:text="${order.address}">@mdo</td>
+                <td th:text="${order.message}">@mdo</td>
+                <td>
+                    <a th:href="'/admin/order/'+${order.id}" class="btn btn-outline-success">Detail</a>
+                </td>
+                <td>
+                    <select>
+                        <option>Pending</option>
+                        <option>PROCESSING</option>
+                        <option>SHIPPED</option>
+                        <option>DELIVERED</option>
+                        <option>CANCELED</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>
+</body>
+</html>

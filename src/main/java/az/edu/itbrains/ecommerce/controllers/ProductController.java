@@ -31,4 +31,9 @@ public class ProductController {
         return "/shop/detail";
     }
 
+
+
+
+
+
 }

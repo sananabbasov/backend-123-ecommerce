@@ -1,5 +1,6 @@
 package az.edu.itbrains.ecommerce.models;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,10 +11,11 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Float quantity;
-    private Float price;
+    private Double quantity;
+    private Double price;
 
     @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
     @ManyToOne
     private Product product;
